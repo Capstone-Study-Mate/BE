@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### env 파일 ###
+.env
+
+### 로컬 파일 ###
+/Users/nemm/Documents/GitHub/BE/src/main/resources/application-local.yml
