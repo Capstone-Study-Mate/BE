@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public record MemberLoginReqDto(
+public record MemberLoginReqDTO(
         @NotBlank String username,
         @NotBlank String password
 )
