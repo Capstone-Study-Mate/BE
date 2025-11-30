@@ -35,6 +35,9 @@ dependencies {
 	// Spring MVC 테스트
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 
+	// mysql Driver
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
 	// 테스트 실행기 제공
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
@@ -47,6 +50,12 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13'
 	// OpenAPI API – Swagger 관련 API 설정 제공
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.8.13'
+
+	// Jwt
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
 

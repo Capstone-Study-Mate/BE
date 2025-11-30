@@ -1,4 +1,5 @@
-db:
-  DB_NAME : study_mate
-  DB_USER : root
-  DB_PASSWORD : wnsdud2ekr
+jwt:
+  token:
+    secretKey: 6OWfLtwAABhU2PNiObnpe0fGiqORn8sq/WnT583Wbqc=
+    expiration:
+      access: 14400000
