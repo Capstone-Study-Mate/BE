@@ -1,2 +1,4 @@
-package com.example.study_mate.member.service;public interface MemberCommandService {
+package com.example.study_mate.member.service;
+
+public interface MemberCommandService {
 }
