@@ -1,7 +1,5 @@
-package com.example.study_mate.global.exception;
+package com.example.study_mate.global.exception.code;
 
-import com.example.study_mate.global.exception.code.ErrorCode;
-import com.example.study_mate.global.exception.code.GeneralErrorCode;
 import lombok.Getter;
 
 @Getter

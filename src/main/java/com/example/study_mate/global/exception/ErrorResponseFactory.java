@@ -1,6 +1,9 @@
-package com.example.global.exception;
+package com.example.study_mate.global.exception;
 
-import com.example.global.common.ErrorResponse;
+
+import com.example.study_mate.global.common.ErrorResponse;
+import com.example.study_mate.global.exception.code.ErrorCode;
+import com.example.study_mate.global.exception.code.FieldError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;

@@ -1,7 +1,7 @@
-package com.example.global.common;
+package com.example.study_mate.global.common;
 
-import com.example.global.exception.ErrorCode;
-import com.example.global.exception.FieldError;
+import com.example.study_mate.global.exception.code.ErrorCode;
+import com.example.study_mate.global.exception.code.FieldError;
 import lombok.Builder;
 
 import java.time.Instant;

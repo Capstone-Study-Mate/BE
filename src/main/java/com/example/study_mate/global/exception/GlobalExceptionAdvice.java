@@ -1,6 +1,9 @@
-package com.example.global.exception;
+package com.example.study_mate.global.exception;
 
-import com.example.global.common.ErrorResponse;
+import com.example.study_mate.global.common.ErrorResponse;
+import com.example.study_mate.global.exception.code.BusinessException;
+import com.example.study_mate.global.exception.code.ErrorCode;
+import com.example.study_mate.global.exception.code.GeneralErrorCode;
 import com.fasterxml.jackson.core.JsonParseException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +13,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.AuthenticationException;
+//import org.springframework.security.access.AccessDeniedException;
+//import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -143,19 +146,19 @@ public class GlobalExceptionAdvice {
 
     // 인증/인가 관련 ----------------------------------------------------
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorResponse> handleAccessDenied(HttpServletRequest request, AccessDeniedException ex) {
-        String traceId = request.getHeader("X-Request-ID");
-        log.warn("[traceId: {}] [AccessDenied] msg: {}", traceId, ex.getMessage());
-        return buildResponse(errorResponseFactory.from(request, GeneralErrorCode.FORBIDDEN));
-    }
-
-    @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ErrorResponse> handleAuthentication(HttpServletRequest request, AuthenticationException ex) {
-        String traceId = request.getHeader("X-Request-ID");
-        log.warn("[traceId: {}] [Authentication] msg: {}", traceId, ex.getMessage());
-        return buildResponse(errorResponseFactory.from(request, GeneralErrorCode.UNAUTHORIZED));
-    }
+//    @ExceptionHandler(AccessDeniedException.class)
+//    public ResponseEntity<ErrorResponse> handleAccessDenied(HttpServletRequest request, AccessDeniedException ex) {
+//        String traceId = request.getHeader("X-Request-ID");
+//        log.warn("[traceId: {}] [AccessDenied] msg: {}", traceId, ex.getMessage());
+//        return buildResponse(errorResponseFactory.from(request, GeneralErrorCode.FORBIDDEN));
+//    }
+//
+//    @ExceptionHandler(AuthenticationException.class)
+//    public ResponseEntity<ErrorResponse> handleAuthentication(HttpServletRequest request, AuthenticationException ex) {
+//        String traceId = request.getHeader("X-Request-ID");
+//        log.warn("[traceId: {}] [Authentication] msg: {}", traceId, ex.getMessage());
+//        return buildResponse(errorResponseFactory.from(request, GeneralErrorCode.UNAUTHORIZED));
+//    }
 
     // 그 외 처리되지 않은 모든 예외 ----------------------------------------------------
 
