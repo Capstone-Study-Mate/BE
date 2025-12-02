@@ -44,9 +44,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             // AccessToken 검증하기: 올바른 토큰이면
             if (jwtUtil.isValid(token)) {
                 // 토큰에서 이메일 추출
-                String email = jwtUtil.getEmail(token);
+                String username = jwtUtil.getUsername(token);
                 // 인증 객체 생성: 이메일로 찾아온 뒤, 인증 객체 생성
-                UserDetails user = customUserDetailsService.loadUserByUsername(email);
+                UserDetails user = customUserDetailsService.loadUserByUsername(username);
                 Authentication auth = new UsernamePasswordAuthenticationToken(
                         user,
                         null,
