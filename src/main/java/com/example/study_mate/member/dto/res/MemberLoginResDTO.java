@@ -5,7 +5,6 @@ import lombok.Getter;
 
 
 @Builder
-@Getter
 public record MemberLoginResDTO(
         Long memberId,
         String accessToken

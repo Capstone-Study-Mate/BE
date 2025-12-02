@@ -26,6 +26,9 @@ public enum GeneralErrorCode implements ErrorCode {
     NOT_ACCEPTABLE("요청한 응답 미디어 타입을 지원하지 않습니다.", HttpStatus.NOT_ACCEPTABLE.value()),
     UNSUPPORTED_MEDIA_TYPE("지원하지 않는 미디어 타입입니다.", HttpStatus.UNSUPPORTED_MEDIA_TYPE.value()),
 
+    // 계정관련 에러코드
+    USER_NOT_FOUND("해당 유저를 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
+
     // 5xx 에러 코드
     INTERNAL_SERVER_ERROR("예상치 못한 서버 오류입니다. 관리자에게 문의해주세요.", HttpStatus.INTERNAL_SERVER_ERROR.value()),
     NOT_IMPLEMENTED("요청하신 기능은 아직 구현되지 않았습니다.", HttpStatus.NOT_IMPLEMENTED.value());

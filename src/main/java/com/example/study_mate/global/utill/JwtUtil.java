@@ -1,6 +1,12 @@
 package com.example.study_mate.global.utill;
 
 
+import com.example.study_mate.global.security.CustomUserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -8,6 +14,9 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
@@ -35,7 +44,7 @@ public class JwtUtil {
      */
     public String getEmail(String token) {
         try {
-            return getClaims(token).getPayload().getSubject(); // Parsing해서 Subject 가져오기
+            return getClaims(token).getPayload().getSubject();
         } catch (JwtException e) {
             return null;
         }
