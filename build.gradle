@@ -51,6 +51,10 @@ dependencies {
 	// OpenAPI API – Swagger 관련 API 설정 제공
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.8.13'
 
+	// Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
 	// Jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
