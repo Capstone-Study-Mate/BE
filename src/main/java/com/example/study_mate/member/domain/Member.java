@@ -31,7 +31,7 @@ public class Member extends BaseEntity {
     @Email
     private String email;
 
-    private String name;       // 실명
+    private String name;
 
     private String nickname;
 
@@ -53,7 +53,26 @@ public class Member extends BaseEntity {
     private String provider;
 
     @Column
-    private String providerId;    // 네이버 id
+    private String providerId;
 
+
+    public void updateMyInfo(
+            String email,
+            String nickname,
+            String major,
+            String phoneNumber
+    ) {
+        this.email = email;
+        this.nickname = nickname;
+        this.major = major;
+        this.phoneNumber = phoneNumber;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (this.role == null) {
+            this.role = Role.ROLE_USER;
+        }
+    }
 }
 

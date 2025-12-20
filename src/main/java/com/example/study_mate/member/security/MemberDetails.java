@@ -28,6 +28,8 @@ public class MemberDetails implements UserDetails {
         return null;
     }
 
+    public Long getMemberId(){return member.getId();}
+
     // 🛡 권한 (ROLE_USER, ROLE_ADMIN 등)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
