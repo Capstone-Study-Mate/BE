@@ -3,14 +3,13 @@ package com.example.study_mate.member.domain;
 import com.example.study_mate.global.common.BaseEntity;
 import com.example.study_mate.member.enums.Gender;
 import com.example.study_mate.member.enums.Role;
+import com.example.study_mate.university.domain.University;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 
 @Entity
@@ -45,6 +44,10 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
 
     @Column
     private String provider;
