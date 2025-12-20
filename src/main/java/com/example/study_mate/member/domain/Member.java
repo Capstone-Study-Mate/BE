@@ -74,5 +74,13 @@ public class Member extends BaseEntity {
             this.role = Role.ROLE_USER;
         }
     }
+
+    public void updateUniversity(University university) {
+        this.university = university;
+    }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
 }
 
