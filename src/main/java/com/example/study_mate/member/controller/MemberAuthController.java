@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MemberAuthController {
 
-    private final MemberCommandService memberCommandService;
-    private final MemberQueryService memberQueryService;
+//    private final MemberCommandService memberCommandService;
+//    private final MemberQueryService memberQueryService;
 
 //    @PostMapping("/sign-up")
 //    public CommonResponse<MemberLoginResDTO> signUp(

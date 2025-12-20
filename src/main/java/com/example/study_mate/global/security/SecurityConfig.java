@@ -2,6 +2,7 @@ package com.example.study_mate.global.security;
 
 import com.example.study_mate.global.security.jwt.JwtAuthenticationFilter;
 import com.example.study_mate.global.security.oauth.CustomOAuth2UserService;
+import com.example.study_mate.global.security.oauth.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     private final String[] allowUris = {
             "/swagger-ui/**",
@@ -50,6 +52,7 @@ public class SecurityConfig {
                 )
                 // OAuth2 로그인
                 .oauth2Login(oauth -> oauth
+                        .successHandler(oAuth2AuthenticationSuccessHandler)
                         .userInfoEndpoint(userInfo ->
                                 userInfo.userService(customOAuth2UserService)
                         )
