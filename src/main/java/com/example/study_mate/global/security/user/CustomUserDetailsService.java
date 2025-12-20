@@ -1,4 +1,4 @@
-package com.example.study_mate.global.security;
+package com.example.study_mate.global.security.user;
 
 import com.example.study_mate.global.exception.code.BusinessException;
 import com.example.study_mate.global.exception.code.GeneralErrorCode;

@@ -1,5 +1,0 @@
-jwt:
-  token:
-    secretKey: 6OWfLtwAABhU2PNiObnpe0fGiqORn8sq/WnT583Wbqc=
-    expiration:
-      access: 14400000

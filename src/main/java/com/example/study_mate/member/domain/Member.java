@@ -1,5 +1,6 @@
 package com.example.study_mate.member.domain;
 
+import com.example.study_mate.global.common.BaseEntity;
 import com.example.study_mate.member.enums.Gender;
 import com.example.study_mate.member.enums.Role;
 import jakarta.persistence.*;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "members")
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,18 +27,30 @@ public class Member {
 
     private String username;
 
-    private String password;
+    private String password;    //소셜 로그인시 사용 x
 
     @Email
     private String email;
 
-    private LocalDate birthday;
+    private String name;       // 실명
+
+    private String nickname;
+
+    private String phoneNumber;
+
+    private String major;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Column
+    private String provider;
+
+    @Column
+    private String providerId;    // 네이버 id
 
 }
 

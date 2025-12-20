@@ -14,6 +14,9 @@ public enum GeneralErrorCode implements ErrorCode {
     // 인증/인가 에러 코드
     UNAUTHORIZED("인증이 필요합니다.", HttpStatus.UNAUTHORIZED.value()),
     FORBIDDEN("권한이 없습니다.", HttpStatus.FORBIDDEN.value()),
+    AUTH_EXPIRED_TOKEN( "만료된 토큰입니다.", HttpStatus.UNAUTHORIZED.value()),
+    AUTH_INVALID_TOKEN("유효하지 않은 코드입니다.", HttpStatus.UNAUTHORIZED.value()),
+
 
     // 4xx 에러 코드
     BAD_REQUEST("잘못된 요청입니다.", HttpStatus.BAD_REQUEST.value()),

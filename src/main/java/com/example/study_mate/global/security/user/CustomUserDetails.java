@@ -1,4 +1,4 @@
-package com.example.study_mate.global.security;
+package com.example.study_mate.global.security.user;
 
 import com.example.study_mate.member.domain.Member;
 import lombok.NonNull;
@@ -28,5 +28,10 @@ public class CustomUserDetails implements UserDetails {
     @NonNull
     public String getUsername() {
         return member.getUsername();
+    }
+
+
+    public Member getMember() {
+        return member;
     }
 }

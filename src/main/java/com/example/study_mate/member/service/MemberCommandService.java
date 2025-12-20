@@ -1,7 +1,8 @@
 package com.example.study_mate.member.service;
 
-import com.example.study_mate.member.dto.req.MemberLoginReqDTO;
+import com.example.study_mate.member.dto.res.JwtTokenPair;
+
 
 public interface MemberCommandService {
-    Object signup(MemberLoginReqDTO dto);
+    Object signup(JwtTokenPair dto);
 }
