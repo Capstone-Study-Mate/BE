@@ -31,7 +31,12 @@ public enum GeneralErrorCode implements ErrorCode {
 
     // 계정관련 에러코드
     USER_NOT_FOUND("해당 유저를 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
-
+    EMAIL_MISMATCH("이메일이 맞지 않습니다.", HttpStatus.NOT_FOUND.value()),
+    // 대학 인증 관련 에러 코드
+    INVALID_VERIFICATION_CODE("인증 코드가 올바르지 않습니다.", HttpStatus.BAD_REQUEST.value()),
+    VERIFICATION_CODE_EXPIRED("인증 코드가 만료되었습니다.", HttpStatus.BAD_REQUEST.value()),
+    UNIVERSITY_NOT_FOUND("대학교를 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
+    UNIVERSITY_EMAIL_MISMATCH("학교 이메일 형식이 아닙니다.", HttpStatus.BAD_REQUEST.value()),
     // 5xx 에러 코드
     INTERNAL_SERVER_ERROR("예상치 못한 서버 오류입니다. 관리자에게 문의해주세요.", HttpStatus.INTERNAL_SERVER_ERROR.value()),
     NOT_IMPLEMENTED("요청하신 기능은 아직 구현되지 않았습니다.", HttpStatus.NOT_IMPLEMENTED.value());
