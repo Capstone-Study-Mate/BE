@@ -28,6 +28,8 @@ public class Study extends BaseEntity {
 
     private int maxMembers;
 
+    private String description;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "leader_id")
     private Member leader;
@@ -43,4 +45,17 @@ public class Study extends BaseEntity {
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<ActivityDay> activityDays;
+
+    // 스터디 가입시 +1
+    public void increaseMembers() {
+        if (currentMembers >= maxMembers) {
+            throw new IllegalStateException("정원이 가득 찼습니다.");
+        }
+        this.currentMembers++;
+    }
+
+    // 스터디 리더 체크
+    public boolean isLeader(Long memberId) {
+        return leader.getId().equals(memberId);
+    }
 }

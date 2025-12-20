@@ -1,4 +1,4 @@
-package com.example.study_mate.memberpreference.dto;
+package com.example.study_mate.memberpreference.dto.req;
 
 import com.example.study_mate.memberpreference.enums.ActivityDay;
 import com.example.study_mate.memberpreference.enums.ActivityTime;

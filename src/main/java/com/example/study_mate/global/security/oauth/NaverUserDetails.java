@@ -16,7 +16,7 @@ public class NaverUserDetails implements OAuth2UserInfo {
 
     @Override
     public String getProvider() {
-        return "NAVER";
+        return "naver";
     }
 
     @Override
