@@ -1,5 +1,5 @@
 jwt:
   token:
-    secretKey: 6OWfLtwAABhU2PNiObnpe0fGiqORn8sq/WnT583Wbqc=
-    expiration:
-      access: 14400000
+    secretKey: ${JWT_SECRET}
+    access-token-validity: 900000
+    refresh-token-validity: 1209600000
