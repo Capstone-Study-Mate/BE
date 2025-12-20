@@ -5,12 +5,13 @@ import com.example.study_mate.member.domain.Member;
 import com.example.study_mate.member.repository.MemberRepository;
 import com.example.study_mate.study.domain.Study;
 import com.example.study_mate.study.dto.req.StudyCreateRequest;
+import com.example.study_mate.study.dto.res.StudyCreateResponse;
 import com.example.study_mate.study.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.example.study_mate.global.exception.code.GeneralErrorCode.USER_NOT_FOUND;
+import static com.example.study_mate.global.exception.code.GeneralErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +20,18 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final MemberRepository memberRepository;
 
-    public Long createStudy(Long memberId, StudyCreateRequest request) {
+    public StudyCreateResponse createStudy(Long memberId, StudyCreateRequest request) {
         Member leader = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(USER_NOT_FOUND));
+
+
+        if (leader.getUniversity() == null) {
+            throw new BusinessException(FORBIDDEN);
+        }
+
+        if (request.maxMembers() < 1) {
+            throw new BusinessException(INVALID_INPUT_VALUE);
+        }
 
         Study study = Study.builder()
                 .title(request.title())
@@ -33,7 +43,8 @@ public class StudyService {
                 .activityTimes(request.activityTimes())
                 .activityDays(request.activityDays())
                 .build();
+        studyRepository.save(study);
 
-        return studyRepository.save(study).getId();
+        return new StudyCreateResponse(study.getId(), study.getTitle());
     }
 }

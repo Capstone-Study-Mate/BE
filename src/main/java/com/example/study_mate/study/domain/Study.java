@@ -48,7 +48,7 @@ public class Study extends BaseEntity {
 
     // 스터디 가입시 +1
     public void increaseMembers() {
-        if (currentMembers >= maxMembers) {
+        if (isFull()) {
             throw new IllegalStateException("정원이 가득 찼습니다.");
         }
         this.currentMembers++;
@@ -57,5 +57,9 @@ public class Study extends BaseEntity {
     // 스터디 리더 체크
     public boolean isLeader(Long memberId) {
         return leader.getId().equals(memberId);
+    }
+
+    public boolean isFull() {
+        return this.currentMembers >= this.maxMembers;
     }
 }
