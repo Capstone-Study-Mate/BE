@@ -3,6 +3,7 @@ package com.example.study_mate.study.controller;
 import com.example.study_mate.global.common.CommonResponse;
 import com.example.study_mate.member.security.MemberDetails;
 import com.example.study_mate.study.dto.req.StudyCreateRequest;
+import com.example.study_mate.study.dto.res.StudyCreateResponse;
 import com.example.study_mate.study.service.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,7 +20,7 @@ public class StudyController {
     private final StudyService studyService;
 
     @PostMapping
-    public CommonResponse<Long> createStudy(
+    public CommonResponse<StudyCreateResponse> createStudy(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestBody StudyCreateRequest request
     ) {

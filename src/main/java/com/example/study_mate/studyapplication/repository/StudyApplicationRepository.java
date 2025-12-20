@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface StudyApplicationRepository extends JpaRepository<StudyApplication, Long> {
+    boolean existsByStudyIdAndMemberId(Long studyId, Long memberId);
 }

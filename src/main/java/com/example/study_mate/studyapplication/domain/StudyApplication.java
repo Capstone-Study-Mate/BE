@@ -41,4 +41,8 @@ public class StudyApplication {
     public void reject() {
         this.status = ApplicationStatus.REJECTED;
     }
+
+    public boolean isPending() {
+        return this.status == ApplicationStatus.PENDING;
+    }
 }
