@@ -1,6 +1,7 @@
 package com.example.study_mate.global.security;
 
 import com.example.study_mate.global.security.jwt.JwtAuthenticationFilter;
+import com.example.study_mate.global.security.oauth.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,18 +13,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     private final String[] allowUris = {
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**",
-            "/auth/**"        // 로그인/회원가입
+            "/auth/**",     // 로그인/회원가입
+            "/oauth2/**"    // OAuth 로그인
     };
 
     @Bean
@@ -44,7 +48,12 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-
+                // OAuth2 로그인
+                .oauth2Login(oauth -> oauth
+                        .userInfoEndpoint(userInfo ->
+                                userInfo.userService(customOAuth2UserService)
+                        )
+                )
                 // JWT 필터 등록
                 .addFilterBefore(jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class);

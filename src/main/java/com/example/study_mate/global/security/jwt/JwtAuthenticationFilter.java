@@ -26,6 +26,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+
+        // OAuth2 + 스웨거 JWT 필터 제외
+        return uri.startsWith("/oauth2/")
+                || uri.startsWith("/swagger")
+                || uri.startsWith("/v3/api-docs");
+    }
+    @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
