@@ -51,5 +51,19 @@ public class MemberPreference {
     )
     @Enumerated(EnumType.STRING)
     private Set<ActivityDay> activityDays = new HashSet<>();
+
+    public void update(
+            String studyPurpose,
+            String interest,
+            String tendency,
+            Set<ActivityTime> activityTimes,
+            Set<ActivityDay> activityDays
+    ) {
+        this.studyPurpose = studyPurpose;
+        this.interest = interest;
+        this.tendency = tendency;
+        this.activityTimes = activityTimes;
+        this.activityDays = activityDays;
+    }
 }
 
