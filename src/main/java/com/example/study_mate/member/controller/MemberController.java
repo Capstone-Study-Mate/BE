@@ -7,10 +7,7 @@ import com.example.study_mate.member.security.MemberDetails;
 import com.example.study_mate.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,4 +28,14 @@ public class MemberController {
                 )
         );
     }
+
+    @GetMapping("/me")
+    public CommonResponse<MemberResponse> getMyInfo(
+            @AuthenticationPrincipal MemberDetails memberDetails
+    ) {
+        return CommonResponse.onSuccess(
+                memberService.getMyInfo(memberDetails.getMemberId())
+        );
+    }
+
 }

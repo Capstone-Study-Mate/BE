@@ -32,4 +32,13 @@ public class StudyApplication {
 
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status;
+
+    public void approve() {
+        this.status = ApplicationStatus.APPROVED;
+        study.increaseMembers();
+    }
+
+    public void reject() {
+        this.status = ApplicationStatus.REJECTED;
+    }
 }

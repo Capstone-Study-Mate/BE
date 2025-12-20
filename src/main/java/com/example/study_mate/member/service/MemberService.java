@@ -32,5 +32,15 @@ public class MemberService {
 
         return memberConverter.toResponse(member);
     }
+
+    @Transactional(readOnly = true)
+    public MemberResponse getMyInfo(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() ->
+                        new BusinessException(GeneralErrorCode.USER_NOT_FOUND)
+                );
+
+        return MemberResponse.from(member);
+    }
 }
 

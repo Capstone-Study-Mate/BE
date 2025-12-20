@@ -36,7 +36,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             );
         }
 
-        Member member = memberRepository.findByEmail(userInfo.getEmail())
+        Member member = memberRepository
+                .findByProviderAndProviderId(
+                        userInfo.getProvider(),
+                        userInfo.getProviderId()
+                )
                 .orElseGet(() -> register(userInfo));
 
         return new CustomOAuth2User(member);

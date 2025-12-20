@@ -2,7 +2,8 @@ package com.example.study_mate.memberpreference.controller;
 
 import com.example.study_mate.global.common.CommonResponse;
 import com.example.study_mate.member.security.MemberDetails;
-import com.example.study_mate.memberpreference.dto.MemberPreferenceUpdateRequest;
+import com.example.study_mate.memberpreference.dto.req.MemberPreferenceUpdateRequest;
+import com.example.study_mate.memberpreference.dto.res.MemberPreferenceResponse;
 import com.example.study_mate.memberpreference.service.MemberPreferenceService;
 import lombok.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,5 +27,16 @@ public class MemberPreferenceController {
         );
 
         return CommonResponse.onSuccess(null);
+    }
+
+    @GetMapping("/me/preferences")
+    public CommonResponse<MemberPreferenceResponse> getMyPreference(
+            @AuthenticationPrincipal MemberDetails memberDetails
+    ) {
+        return CommonResponse.onSuccess(
+                memberPreferenceService.getMyPreference(
+                        memberDetails.getMemberId()
+                )
+        );
     }
 }
