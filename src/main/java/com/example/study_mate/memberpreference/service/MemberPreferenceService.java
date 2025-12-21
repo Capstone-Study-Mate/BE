@@ -21,6 +21,7 @@ public class MemberPreferenceService {
     private final MemberPreferenceConverter converter;
 
 
+    // 내 성향 수정 로직
     @Transactional
     public void updateMyPreference(
             Member member,
@@ -52,6 +53,7 @@ public class MemberPreferenceService {
     }
 
 
+    // 내 성향 조회 로직
     @Transactional(readOnly = true) //읽기 전용 트랜잭션 명시적 표시
     public MemberPreferenceResponse getMyPreference(Member member) {
 

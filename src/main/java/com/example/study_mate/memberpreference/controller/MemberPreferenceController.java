@@ -29,7 +29,7 @@ public class MemberPreferenceController {
     }
 
 
-    //
+    // 내 성향 조회
     @GetMapping("/me/preferences")
     public CommonResponse<MemberPreferenceResponse> getMyPreference(
             @AuthenticationPrincipal MemberDetails memberDetails
