@@ -1,5 +1,6 @@
 package com.example.study_mate.study.service;
 
+import com.example.study_mate.global.common.PageResponse;
 import com.example.study_mate.global.exception.code.BusinessException;
 import com.example.study_mate.member.domain.Member;
 import com.example.study_mate.member.repository.MemberRepository;
@@ -9,6 +10,10 @@ import com.example.study_mate.study.dto.res.StudyCreateResponse;
 import com.example.study_mate.study.dto.res.StudyListResponse;
 import com.example.study_mate.study.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,7 +54,20 @@ public class StudyService {
         return new StudyCreateResponse(study.getId(), study.getTitle());
     }
 
-//    public StudyListResponse listStudies(Long memberId) {
-//
-//    }
+    @Transactional(readOnly = true)
+    public PageResponse<StudyListResponse> getStudies(int page, int size) {
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.DESC, "createdAt")
+        );
+
+        Page<Study> pageResult = studyRepository.findAll(pageable);
+
+        return PageResponse.of(
+                pageResult,
+                StudyListResponse::from
+        );
+    }
 }

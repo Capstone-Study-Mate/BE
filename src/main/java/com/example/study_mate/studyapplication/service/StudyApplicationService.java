@@ -35,11 +35,6 @@ public class StudyApplicationService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(USER_NOT_FOUND));
 
-        // 같은 대학만 신청 가능
-        if (!study.getUniversity().equals(member.getUniversity())) {
-            throw new BusinessException(FORBIDDEN);
-        }
-
         // 리더는 신청 불가
         if (study.isLeader(memberId)) {
             throw new BusinessException(INVALID_STATE);
