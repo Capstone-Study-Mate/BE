@@ -5,6 +5,7 @@ import com.example.study_mate.global.common.PageResponse;
 import com.example.study_mate.member.security.MemberDetails;
 import com.example.study_mate.study.dto.req.StudyCreateRequest;
 import com.example.study_mate.study.dto.res.StudyCreateResponse;
+import com.example.study_mate.study.dto.res.StudyDetailResponse;
 import com.example.study_mate.study.dto.res.StudyListResponse;
 import com.example.study_mate.study.service.StudyService;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,15 @@ public class StudyController {
     ) {
         return CommonResponse.onSuccess(
                 studyService.getStudies(page, size)
+        );
+    }
+    
+    @GetMapping("/{studyId}")
+    public CommonResponse<StudyDetailResponse> getStudyDetail(
+            @PathVariable Long studyId
+    ) {
+        return CommonResponse.onSuccess(
+                studyService.getStudyDetail(studyId)
         );
     }
 }

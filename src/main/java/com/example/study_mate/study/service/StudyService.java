@@ -7,6 +7,7 @@ import com.example.study_mate.member.repository.MemberRepository;
 import com.example.study_mate.study.domain.Study;
 import com.example.study_mate.study.dto.req.StudyCreateRequest;
 import com.example.study_mate.study.dto.res.StudyCreateResponse;
+import com.example.study_mate.study.dto.res.StudyDetailResponse;
 import com.example.study_mate.study.dto.res.StudyListResponse;
 import com.example.study_mate.study.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
@@ -70,4 +71,20 @@ public class StudyService {
                 StudyListResponse::from
         );
     }
+
+    // 상세 조회
+    @Transactional(readOnly = true)
+    public StudyDetailResponse getStudyDetail(Long studyId) {
+
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new BusinessException(NOT_FOUND));
+
+        // LAZY 컬렉션(activityTimes/activityDays)을 트랜잭션 안에서 미리 로딩해서
+        // JSON 직렬화 시점(no session) LazyInitializationException을 방지한다.
+        study.getActivityTimes().size();
+        study.getActivityDays().size();
+
+        return StudyDetailResponse.from(study);
+    }
+
 }
