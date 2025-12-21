@@ -19,6 +19,7 @@ public class ResumeCommandServiceImpl implements ResumeCommandService {
 
     private final ResumeRepository resumeRepository;
 
+    // 이력서 생성 로직
     @Transactional
     @Override
     public Boolean createResume(Member member, ResumeRequest request) {

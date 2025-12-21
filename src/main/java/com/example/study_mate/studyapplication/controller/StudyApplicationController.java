@@ -22,6 +22,7 @@ public class StudyApplicationController {
 
     private final StudyApplicationService applicationService;
 
+    // 스터디 그룹 신청
     @PostMapping("/{studyId}/apply")
     public CommonResponse<StudyApplicationResponse> apply(
             @AuthenticationPrincipal MemberDetails memberDetails,
@@ -33,6 +34,7 @@ public class StudyApplicationController {
         ));
     }
 
+    // 스터디 그룹 신청 승인
     @PatchMapping("/{applicationId}/approve")
     public CommonResponse<StudyApplicationResponse> approve(
             @AuthenticationPrincipal MemberDetails memberDetails,
@@ -45,6 +47,8 @@ public class StudyApplicationController {
         return CommonResponse.onSuccess(null);
     }
 
+
+    // 스터디 그룹 신청 거절
     @PatchMapping("/{applicationId}/reject")
     public CommonResponse<StudyApplicationResponse> reject(
             @AuthenticationPrincipal MemberDetails memberDetails,

@@ -32,6 +32,7 @@ public class StudyApplicationService {
     private final MemberRepository memberRepository;
     private final StudyApplicationConverter converter;
 
+    // 스터디 그룹 신청 로직
     @Transactional
     public StudyApplicationResponse apply(Long memberId, Long studyId) {
 
@@ -65,6 +66,7 @@ public class StudyApplicationService {
         );
         return converter.toResponse(application);
     }
+
 
     public StudyApplicationResponse approveApplication(Long leaderId, Long applicationId) {
         StudyApplication application =
@@ -113,6 +115,7 @@ public class StudyApplicationService {
         return converter.toResponse(application);
     }
 
+    // 신청 내역 조회 로직
     @Transactional(readOnly = true)
     public PageResponse<MyStudyApplicationResponse> getMyApplications(
             Long memberId,
@@ -131,6 +134,7 @@ public class StudyApplicationService {
         );
     }
 
+    // 스터디 그룹으로 온 신청 내역 조회 로직
     @Transactional(readOnly = true)
     public PageResponse<StudyApplicationListResponse> getStudyApplications(
             Long studyId,
