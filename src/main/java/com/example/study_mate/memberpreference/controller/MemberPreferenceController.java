@@ -16,6 +16,8 @@ public class MemberPreferenceController {
 
     private final MemberPreferenceService memberPreferenceService;
 
+
+    // 내 성향 수정
     @PatchMapping("/me/preferences")
     public CommonResponse<Void> updateMyPreference(
             @AuthenticationPrincipal MemberDetails memberDetails,
@@ -27,6 +29,7 @@ public class MemberPreferenceController {
     }
 
 
+    //
     @GetMapping("/me/preferences")
     public CommonResponse<MemberPreferenceResponse> getMyPreference(
             @AuthenticationPrincipal MemberDetails memberDetails
