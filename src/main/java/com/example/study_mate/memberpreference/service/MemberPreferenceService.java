@@ -15,50 +15,50 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class MemberPreferenceService {
 
-    private final MemberRepository memberRepository;
     private final MemberPreferenceRepository memberPreferenceRepository;
     private final MemberPreferenceConverter converter;
 
+
+    @Transactional
     public void updateMyPreference(
-            Long memberId,
-            MemberPreferenceUpdateRequest request
+            Member member,
+            MemberPreferenceUpdateRequest request,
+            Long id
     ) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() ->
-                        new BusinessException(GeneralErrorCode.USER_NOT_FOUND)
-                );
-        MemberPreference preference =
-                memberPreferenceRepository.findByMemberId(memberId)
-                        .orElseGet(() ->
-                                memberPreferenceRepository.save(
-                                        MemberPreference.builder()
-                                                .member(member)
-                                                .build()
-                                )
-                        );
 
-        preference.update(
-                request.studyPurpose(),
-                request.interest(),
-                request.tendency(),
-                request.activityTimes(),
-                request.activityDays()
-        );
+        MemberPreference pref = memberPreferenceRepository.findById(id)
+                .orElseGet(()-> {
+                    MemberPreference newPref = MemberPreference.builder()
+                            .member(member)
+                            .studyPurpose(request.studyPurpose())
+                            .tendency(request.tendency())
+                            .interest(request.interest())
+                            .activityTimes(request.activityTimes())
+                            .activityDays(request.activityDays())
+                            .build();
+
+                    return memberPreferenceRepository.save(newPref);  // 없으면 생성
+                });
+
+        // 수정하려는 클라이언트와 수정하려는 성향의 클라이언트가 동일하지 않을 경우
+        if(!pref.getMember().equals(member))
+            throw new BusinessException(GeneralErrorCode.FORBIDDEN);
+
+        // 존재하는 경우 수정
+        if(pref.getId() != null)
+            pref.update(request);
+
     }
-    @Transactional(readOnly = true) //읽기 전용 트랜잭션 명시적 표시
-    public MemberPreferenceResponse getMyPreference(Long memberId) {
-        MemberPreference preference =
-                memberPreferenceRepository.findByMemberId(memberId)
-                        .orElse(null);
 
-        if (preference == null) {
-            return null;
-        }
-        preference.getActivityTimes().size();
-        preference.getActivityDays().size();
+
+    @Transactional(readOnly = true) //읽기 전용 트랜잭션 명시적 표시
+    public MemberPreferenceResponse getMyPreference(Member member) {
+
+        MemberPreference preference =
+                memberPreferenceRepository.findByMember(member)
+                        .orElseThrow(() -> new BusinessException(GeneralErrorCode.INVALID_INPUT_VALUE));
 
         return converter.toResponse(preference);
     }

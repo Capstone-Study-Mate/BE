@@ -1,8 +1,11 @@
 package com.example.study_mate.memberpreference.domain;
 
 import com.example.study_mate.member.domain.Member;
+import com.example.study_mate.memberpreference.dto.req.MemberPreferenceUpdateRequest;
 import com.example.study_mate.memberpreference.enums.ActivityDay;
 import com.example.study_mate.memberpreference.enums.ActivityTime;
+import com.example.study_mate.memberpreference.enums.StudyPurpose;
+import com.example.study_mate.memberpreference.enums.Tendency;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,9 +32,13 @@ public class MemberPreference {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String studyPurpose;
+    @Enumerated(EnumType.STRING)
+    private StudyPurpose studyPurpose;
+
+    @Enumerated(EnumType.STRING)
+    private Tendency tendency;
+
     private String interest;
-    private String tendency;
 
     // enum + Set (중복 선택 가능)
     @Builder.Default
@@ -52,18 +59,13 @@ public class MemberPreference {
     @Enumerated(EnumType.STRING)
     private Set<ActivityDay> activityDays = new HashSet<>();
 
-    public void update(
-            String studyPurpose,
-            String interest,
-            String tendency,
-            Set<ActivityTime> activityTimes,
-            Set<ActivityDay> activityDays
-    ) {
-        this.studyPurpose = studyPurpose;
-        this.interest = interest;
-        this.tendency = tendency;
-        this.activityTimes = activityTimes;
-        this.activityDays = activityDays;
+
+    public void update(MemberPreferenceUpdateRequest request) {
+        this.studyPurpose = request.studyPurpose();
+        this.interest = request.interest();
+        this.tendency = request.tendency();
+        this.activityTimes = request.activityTimes();
+        this.activityDays = request.activityDays();
     }
 }
 

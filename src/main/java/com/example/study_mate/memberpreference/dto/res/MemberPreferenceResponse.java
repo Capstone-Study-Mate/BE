@@ -2,13 +2,15 @@ package com.example.study_mate.memberpreference.dto.res;
 
 import com.example.study_mate.memberpreference.enums.ActivityDay;
 import com.example.study_mate.memberpreference.enums.ActivityTime;
+import com.example.study_mate.memberpreference.enums.StudyPurpose;
+import com.example.study_mate.memberpreference.enums.Tendency;
 
 import java.util.Set;
 
 public record MemberPreferenceResponse(
-        String studyPurpose,
+        StudyPurpose studyPurpose,
         String interest,
-        String tendency,
+        Tendency tendency,
         Set<ActivityTime> activityTimes,
         Set<ActivityDay> activityDays
 ) {}

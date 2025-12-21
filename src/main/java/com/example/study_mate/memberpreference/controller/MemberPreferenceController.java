@@ -16,18 +16,19 @@ public class MemberPreferenceController {
 
     private final MemberPreferenceService memberPreferenceService;
 
-    @PatchMapping("/me/preferences")
+    @PatchMapping("/me/preferences/{id}")
     public CommonResponse<Void> updateMyPreference(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestBody MemberPreferenceUpdateRequest request
+            @RequestBody MemberPreferenceUpdateRequest request,
+            @PathVariable Long id
     ) {
         memberPreferenceService.updateMyPreference(
-                memberDetails.getMemberId(),
-                request
+                memberDetails.getMember(), request, id
         );
 
         return CommonResponse.onSuccess(null);
     }
+
 
     @GetMapping("/me/preferences")
     public CommonResponse<MemberPreferenceResponse> getMyPreference(
@@ -35,8 +36,9 @@ public class MemberPreferenceController {
     ) {
         return CommonResponse.onSuccess(
                 memberPreferenceService.getMyPreference(
-                        memberDetails.getMemberId()
+                        memberDetails.getMember()
                 )
         );
     }
+
 }
