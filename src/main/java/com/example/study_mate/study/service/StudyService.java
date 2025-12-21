@@ -40,6 +40,7 @@ public class StudyService {
 
 
     public StudyCreateResponse createStudy(Long memberId, StudyCreateRequest request) {
+
         Member leader = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(USER_NOT_FOUND));
 
@@ -59,9 +60,13 @@ public class StudyService {
                 .university(leader.getUniversity())
                 .maxMembers(request.maxMembers())
                 .currentMembers(1)
+                .studyPurpose(request.studyPurpose())
+                .tendency(request.tendency())
+                .interest(request.interest())
                 .activityTimes(request.activityTimes())
                 .activityDays(request.activityDays())
                 .build();
+
         studyRepository.save(study);
 
         return new StudyCreateResponse(study.getId(), study.getTitle());

@@ -27,11 +27,10 @@ public class StudyApplicationController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @PathVariable Long studyId
     ) {
-        applicationService.apply(
+        return CommonResponse.onSuccess(applicationService.apply(
                 memberDetails.getMemberId(),
                 studyId
-        );
-        return CommonResponse.onSuccess(null);
+        ));
     }
 
     @PatchMapping("/{applicationId}/approve")
