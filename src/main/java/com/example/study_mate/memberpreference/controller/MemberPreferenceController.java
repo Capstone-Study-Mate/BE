@@ -16,11 +16,10 @@ public class MemberPreferenceController {
 
     private final MemberPreferenceService memberPreferenceService;
 
-    @PatchMapping("/me/preferences/{id}")
+    @PatchMapping("/me/preferences")
     public CommonResponse<Void> updateMyPreference(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestBody MemberPreferenceUpdateRequest request,
-            @PathVariable Long id
+            @RequestBody MemberPreferenceUpdateRequest request
     ) {
         memberPreferenceService.updateMyPreference(memberDetails.getMember(), request);
 
