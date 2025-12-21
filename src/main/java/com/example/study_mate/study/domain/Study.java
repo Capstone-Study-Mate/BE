@@ -4,6 +4,8 @@ import com.example.study_mate.global.common.BaseEntity;
 import com.example.study_mate.member.domain.Member;
 import com.example.study_mate.memberpreference.enums.ActivityDay;
 import com.example.study_mate.memberpreference.enums.ActivityTime;
+import com.example.study_mate.memberpreference.enums.StudyPurpose;
+import com.example.study_mate.memberpreference.enums.Tendency;
 import com.example.study_mate.university.domain.University;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,6 +31,14 @@ public class Study extends BaseEntity {
     private int maxMembers;
 
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private StudyPurpose studyPurpose;
+
+    @Enumerated(EnumType.STRING)
+    private Tendency tendency;
+
+    private String interest;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "leader_id")

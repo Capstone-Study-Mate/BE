@@ -47,6 +47,7 @@ public class StudyController {
         );
     }
 
+
     @GetMapping("/{studyId}")
     public CommonResponse<StudyDetailResponse> getStudyDetail(
             @PathVariable Long studyId
@@ -63,6 +64,17 @@ public class StudyController {
     ) {
         return CommonResponse.onSuccess(
                 studyService.getMyStudies(memberDetails.getMemberId(), pageable)
+        );
+    }
+
+    @GetMapping("/recommend")
+    public CommonResponse<PageResponse<StudyListResponse>> getRecommendStudies(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return CommonResponse.onSuccess(
+                studyService.getRecommendStudies(memberDetails.getMember(), page, size)
         );
     }
 
