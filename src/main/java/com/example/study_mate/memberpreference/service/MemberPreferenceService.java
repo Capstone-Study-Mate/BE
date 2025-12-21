@@ -24,11 +24,10 @@ public class MemberPreferenceService {
     @Transactional
     public void updateMyPreference(
             Member member,
-            MemberPreferenceUpdateRequest request,
-            Long id
+            MemberPreferenceUpdateRequest request
     ) {
 
-        MemberPreference pref = memberPreferenceRepository.findById(id)
+        MemberPreference pref = memberPreferenceRepository.findByMember(member)
                 .orElseGet(()-> {
                     MemberPreference newPref = MemberPreference.builder()
                             .member(member)

@@ -22,9 +22,7 @@ public class MemberPreferenceController {
             @RequestBody MemberPreferenceUpdateRequest request,
             @PathVariable Long id
     ) {
-        memberPreferenceService.updateMyPreference(
-                memberDetails.getMember(), request, id
-        );
+        memberPreferenceService.updateMyPreference(memberDetails.getMember(), request);
 
         return CommonResponse.onSuccess(null);
     }
