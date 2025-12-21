@@ -6,6 +6,7 @@ import com.example.study_mate.member.repository.MemberRepository;
 import com.example.study_mate.study.domain.Study;
 import com.example.study_mate.study.dto.req.StudyCreateRequest;
 import com.example.study_mate.study.dto.res.StudyCreateResponse;
+import com.example.study_mate.study.dto.res.StudyListResponse;
 import com.example.study_mate.study.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,4 +48,8 @@ public class StudyService {
 
         return new StudyCreateResponse(study.getId(), study.getTitle());
     }
+
+//    public StudyListResponse listStudies(Long memberId) {
+//
+//    }
 }
