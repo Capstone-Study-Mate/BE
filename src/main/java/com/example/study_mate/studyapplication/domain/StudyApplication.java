@@ -1,5 +1,6 @@
 package com.example.study_mate.studyapplication.domain;
 
+import com.example.study_mate.global.common.BaseEntity;
 import com.example.study_mate.member.domain.Member;
 import com.example.study_mate.resume.domain.Resume;
 import com.example.study_mate.study.domain.Study;
@@ -12,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StudyApplication {
+public class StudyApplication extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

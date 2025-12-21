@@ -61,7 +61,7 @@ public class StudyService {
         Pageable pageable = PageRequest.of(
                 page,
                 size,
-                Sort.by(Sort.Direction.DESC, "createdAt")
+                Sort.by(Sort.Direction.DESC, "updatedAt")
         );
 
         Page<Study> pageResult = studyRepository.findAll(pageable);

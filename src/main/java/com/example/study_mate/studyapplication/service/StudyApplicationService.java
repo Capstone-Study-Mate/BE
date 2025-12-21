@@ -1,5 +1,6 @@
 package com.example.study_mate.studyapplication.service;
 
+import com.example.study_mate.global.common.PageResponse;
 import com.example.study_mate.global.exception.code.BusinessException;
 import com.example.study_mate.member.domain.Member;
 import com.example.study_mate.member.repository.MemberRepository;
@@ -7,10 +8,14 @@ import com.example.study_mate.study.domain.Study;
 import com.example.study_mate.study.repository.StudyRepository;
 import com.example.study_mate.studyapplication.converter.StudyApplicationConverter;
 import com.example.study_mate.studyapplication.domain.StudyApplication;
+import com.example.study_mate.studyapplication.dto.res.MyStudyApplicationResponse;
 import com.example.study_mate.studyapplication.dto.res.StudyApplicationResponse;
 import com.example.study_mate.studyapplication.enums.ApplicationStatus;
 import com.example.study_mate.studyapplication.repository.StudyApplicationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -106,4 +111,23 @@ public class StudyApplicationService {
 
         return converter.toResponse(application);
     }
+
+    @Transactional(readOnly = true)
+    public PageResponse<MyStudyApplicationResponse> getMyApplications(
+            Long memberId,
+            int page,
+            int size
+    ) {
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.DESC, "updatedAt")
+        );
+
+        return PageResponse.of(
+                applicationRepository.findByMember_Id(memberId, pageable),
+                MyStudyApplicationResponse::from
+        );
+    }
+
 }
