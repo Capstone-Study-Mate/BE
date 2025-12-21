@@ -4,9 +4,11 @@ import com.example.study_mate.global.common.CommonResponse;
 import com.example.study_mate.global.common.PageResponse;
 import com.example.study_mate.member.security.MemberDetails;
 import com.example.study_mate.studyapplication.dto.res.MyStudyApplicationResponse;
+import com.example.study_mate.studyapplication.dto.res.StudyApplicationListResponse;
 import com.example.study_mate.studyapplication.dto.res.StudyApplicationResponse;
 import com.example.study_mate.studyapplication.service.StudyApplicationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -66,4 +68,28 @@ public class StudyApplicationController {
                 applicationService.getMyApplications(memberDetails.getMemberId(), page, size)
         );
     }
+
+    @GetMapping("/studies/{studyId}/applications")
+    public CommonResponse<PageResponse<StudyApplicationListResponse>> getStudyApplications(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @PathVariable Long studyId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.DESC, "createdAt")
+        );
+
+        return CommonResponse.onSuccess(
+                applicationService.getStudyApplications(
+                        studyId,
+                        memberDetails.getMemberId(),
+                        pageable
+                )
+        );
+    }
+
+
 }

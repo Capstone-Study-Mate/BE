@@ -9,6 +9,7 @@ import com.example.study_mate.study.repository.StudyRepository;
 import com.example.study_mate.studyapplication.converter.StudyApplicationConverter;
 import com.example.study_mate.studyapplication.domain.StudyApplication;
 import com.example.study_mate.studyapplication.dto.res.MyStudyApplicationResponse;
+import com.example.study_mate.studyapplication.dto.res.StudyApplicationListResponse;
 import com.example.study_mate.studyapplication.dto.res.StudyApplicationResponse;
 import com.example.study_mate.studyapplication.enums.ApplicationStatus;
 import com.example.study_mate.studyapplication.repository.StudyApplicationRepository;
@@ -127,6 +128,26 @@ public class StudyApplicationService {
         return PageResponse.of(
                 applicationRepository.findByMember_Id(memberId, pageable),
                 MyStudyApplicationResponse::from
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public PageResponse<StudyApplicationListResponse> getStudyApplications(
+            Long studyId,
+            Long leaderId,
+            Pageable pageable
+    ) {
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new BusinessException(NOT_FOUND));
+
+        // 방장 아니면 접근 금지
+        if (!study.getLeader().getId().equals(leaderId)) {
+            throw new BusinessException(FORBIDDEN);
+        }
+
+        return PageResponse.of(
+                applicationRepository.findByStudy_Id(studyId, pageable),
+                StudyApplicationListResponse::from
         );
     }
 
