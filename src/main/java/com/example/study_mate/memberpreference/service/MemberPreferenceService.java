@@ -41,9 +41,6 @@ public class MemberPreferenceService {
                     return memberPreferenceRepository.save(newPref);  // 없으면 생성
                 });
 
-        // 수정하려는 클라이언트와 수정하려는 성향의 클라이언트가 동일하지 않을 경우
-        if(!pref.getMember().equals(member))
-            throw new BusinessException(GeneralErrorCode.FORBIDDEN);
 
         // 존재하는 경우 수정
         if(pref.getId() != null)
