@@ -39,16 +39,18 @@ public class StudyService {
     private final StudyApplicationRepository studyApplicationRepository;
 
 
+    // 스터디 그룹 생성 비즈니스 로직
     public StudyCreateResponse createStudy(Long memberId, StudyCreateRequest request) {
 
         Member leader = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(USER_NOT_FOUND));
 
-
+        // 해당 유저의 대학 인증이 되지 않으면 예외 처리
         if (leader.getUniversity() == null) {
             throw new BusinessException(FORBIDDEN);
         }
 
+        // 최대 인원 수를 알맞지 않은 값으로 했을 경우 예외 처리
         if (request.maxMembers() < 1) {
             throw new BusinessException(INVALID_INPUT_VALUE);
         }
@@ -73,9 +75,11 @@ public class StudyService {
     }
 
 
+    // 모든 스터디 그룹 조회 비즈니스 로직
     @Transactional(readOnly = true)
     public PageResponse<StudyListResponse> getStudies(int page, int size) {
 
+        // 페이징 구조 설정 ( 데이터의 양이 많을 경우를 대비하여 페이지화 )
         Pageable pageable = PageRequest.of(
                 page,
                 size,
@@ -84,13 +88,14 @@ public class StudyService {
 
         Page<Study> pageResult = studyRepository.findAll(pageable);
 
+        // 모든 스터디 그룹을 페이징 구조에 맞춰 반환
         return PageResponse.of(
                 pageResult,
                 StudyListResponse::from
         );
     }
 
-    // 상세 조회
+    // 상세 조회 기능
     @Transactional(readOnly = true)
     public StudyDetailResponse getStudyDetail(Long studyId) {
 
@@ -106,6 +111,7 @@ public class StudyService {
     }
 
 
+    // 유저가 속한 스터디 그룹 조회 기능
     @Transactional(readOnly = true)
     public PageResponse<MyStudyResponse> getMyStudies(
             Long memberId,
@@ -137,23 +143,26 @@ public class StudyService {
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
                 mergedStudies.size(),
-                1,          // 오늘은 단순 처리
+                1,
                 true,
                 true
         );
     }
 
 
+    // 해당 유저의 성향에 맞춰 스터드 그룹 추천 기능
     public PageResponse<StudyListResponse> getRecommendStudies(Member member,int page, int size) {
 
         MemberPreference pref = memberPreferenceRepository.getReferenceById(member.getId());
 
         List<Study> studies = studyRepository.findAll();
 
+        // 리스트에 해당 스터디 그룹의 성향과 유저의 성향을 비교하는 메서드 적용
         List<ScoredStudy> scoredStudies = new ArrayList<>(studies.stream().
                 map(study -> new ScoredStudy(study, calculateScore(pref, study)))
                 .toList());
 
+        // 가중치를 기준으로 내림차순 정렬
         scoredStudies.sort((a,b) -> b.score() - a.score());
 
 

@@ -24,6 +24,8 @@ public class StudyController {
 
     private final StudyService studyService;
 
+
+    // 스터디 그룹 생성
     @PostMapping
     public CommonResponse<StudyCreateResponse> createStudy(
             @AuthenticationPrincipal MemberDetails memberDetails,
@@ -37,6 +39,7 @@ public class StudyController {
         );
     }
 
+    // 모든 스터디 그룹 조회
     @GetMapping
     public CommonResponse<PageResponse<StudyListResponse>> getStudies(
             @RequestParam(defaultValue = "0") int page,
@@ -48,6 +51,7 @@ public class StudyController {
     }
 
 
+    // 해당 스터디 그룹의 상세 정보
     @GetMapping("/{studyId}")
     public CommonResponse<StudyDetailResponse> getStudyDetail(
             @PathVariable Long studyId
@@ -57,6 +61,7 @@ public class StudyController {
         );
     }
 
+    // 자신이 속한 스터디 그룹 조회
     @GetMapping("/me")
     public CommonResponse<PageResponse<MyStudyResponse>> getMyStudies(
             @AuthenticationPrincipal MemberDetails memberDetails,
@@ -67,6 +72,8 @@ public class StudyController {
         );
     }
 
+
+    // 성향 기반 추천 스터디 그룹 조회
     @GetMapping("/recommend")
     public CommonResponse<PageResponse<StudyListResponse>> getRecommendStudies(
             @AuthenticationPrincipal MemberDetails memberDetails,

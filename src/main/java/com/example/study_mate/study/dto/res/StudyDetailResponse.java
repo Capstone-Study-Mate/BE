@@ -1,5 +1,7 @@
 package com.example.study_mate.study.dto.res;
 
+import com.example.study_mate.memberpreference.enums.StudyPurpose;
+import com.example.study_mate.memberpreference.enums.Tendency;
 import com.example.study_mate.study.domain.Study;
 import com.example.study_mate.memberpreference.enums.ActivityDay;
 import com.example.study_mate.memberpreference.enums.ActivityTime;
@@ -14,6 +16,11 @@ public record StudyDetailResponse(
         String leaderName,
         int currentMembers,
         int maxMembers,
+
+        StudyPurpose studyPurpose,
+        Tendency tendency,
+        String interest,
+
         Set<ActivityTime> activityTimes,
         Set<ActivityDay> activityDays
 ) {
@@ -26,6 +33,9 @@ public record StudyDetailResponse(
                 study.getLeader().getNickname(),
                 study.getCurrentMembers(),
                 study.getMaxMembers(),
+                study.getStudyPurpose(),
+                study.getTendency(),
+                study.getInterest(),
                 study.getActivityTimes(),
                 study.getActivityDays()
         );
