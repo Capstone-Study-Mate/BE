@@ -16,6 +16,8 @@ public class MemberController {
 
     private final MemberService memberService;
 
+
+    // 내 정보 수정
     @PatchMapping("/me")
     public CommonResponse<MemberResponse> updateMyInfo(
             @AuthenticationPrincipal MemberDetails memberDetails,
@@ -29,6 +31,7 @@ public class MemberController {
         );
     }
 
+    // 내 정보 조회
     @GetMapping("/me")
     public CommonResponse<MemberResponse> getMyInfo(
             @AuthenticationPrincipal MemberDetails memberDetails
