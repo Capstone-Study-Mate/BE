@@ -1,6 +1,7 @@
 package com.example.study_mate.studyapplication.repository;
 
 import com.example.study_mate.studyapplication.domain.StudyApplication;
+import com.example.study_mate.studyapplication.enums.ApplicationStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,9 @@ public interface StudyApplicationRepository extends JpaRepository<StudyApplicati
     boolean existsByStudyIdAndMemberId(Long studyId, Long memberId);
     Page<StudyApplication> findByMember_Id(Long memberId, Pageable pageable);
     Page<StudyApplication> findByStudy_Id(Long studyId, Pageable pageable);
+    Page<StudyApplication> findByMember_IdAndStatus(
+            Long memberId,
+            ApplicationStatus status,
+            Pageable pageable
+    );
 }

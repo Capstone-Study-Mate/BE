@@ -6,10 +6,14 @@ import com.example.study_mate.member.domain.Member;
 import com.example.study_mate.member.repository.MemberRepository;
 import com.example.study_mate.study.domain.Study;
 import com.example.study_mate.study.dto.req.StudyCreateRequest;
+import com.example.study_mate.study.dto.res.MyStudyResponse;
 import com.example.study_mate.study.dto.res.StudyCreateResponse;
 import com.example.study_mate.study.dto.res.StudyDetailResponse;
 import com.example.study_mate.study.dto.res.StudyListResponse;
 import com.example.study_mate.study.repository.StudyRepository;
+import com.example.study_mate.studyapplication.domain.StudyApplication;
+import com.example.study_mate.studyapplication.enums.ApplicationStatus;
+import com.example.study_mate.studyapplication.repository.StudyApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +21,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import static com.example.study_mate.global.exception.code.GeneralErrorCode.*;
 
@@ -26,6 +35,7 @@ import static com.example.study_mate.global.exception.code.GeneralErrorCode.*;
 public class StudyService {
     private final StudyRepository studyRepository;
     private final MemberRepository memberRepository;
+    private final StudyApplicationRepository studyApplicationRepository;
 
     public StudyCreateResponse createStudy(Long memberId, StudyCreateRequest request) {
         Member leader = memberRepository.findById(memberId)
@@ -86,5 +96,44 @@ public class StudyService {
 
         return StudyDetailResponse.from(study);
     }
+
+    @Transactional(readOnly = true)
+    public PageResponse<MyStudyResponse> getMyStudies(
+            Long memberId,
+            Pageable pageable
+    ) {
+        Page<Study> leaderPage =
+                studyRepository.findMyLeaderStudies(memberId, pageable);
+
+        Page<StudyApplication> applicationPage =
+                studyApplicationRepository.findByMember_IdAndStatus(
+                        memberId,
+                        ApplicationStatus.APPROVED,
+                        pageable
+                );
+
+        Set<Study> mergedStudies = new LinkedHashSet<>();
+        mergedStudies.addAll(leaderPage.getContent());
+        mergedStudies.addAll(
+                applicationPage.getContent()
+                        .stream()
+                        .map(StudyApplication::getStudy)
+                        .toList()
+        );
+
+        return new PageResponse<>(
+                mergedStudies.stream()
+                        .map(MyStudyResponse::from)
+                        .toList(),
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                mergedStudies.size(),
+                1,          // 오늘은 단순 처리
+                true,
+                true
+        );
+    }
+
+
 
 }
