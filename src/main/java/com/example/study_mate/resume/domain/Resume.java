@@ -1,6 +1,7 @@
 package com.example.study_mate.resume.domain;
 
 import com.example.study_mate.member.domain.Member;
+import com.example.study_mate.resume.dto.req.ResumeRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +24,10 @@ public class Resume {
     private String introduction;
 
     private String title;
+
+    public void updateResume(ResumeRequest request) {
+        this.title = request.title();
+        this.introduction = request.introduction();
+    }
 }
 

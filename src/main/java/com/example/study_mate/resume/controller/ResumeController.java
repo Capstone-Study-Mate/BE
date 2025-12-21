@@ -1,13 +1,11 @@
 package com.example.study_mate.resume.controller;
 
 import com.example.study_mate.global.common.CommonResponse;
-import com.example.study_mate.member.domain.Member;
 import com.example.study_mate.member.security.MemberDetails;
-import com.example.study_mate.resume.dto.req.ResumeCreateRequest;
+import com.example.study_mate.resume.dto.req.ResumeRequest;
 import com.example.study_mate.resume.service.ResumeCommandService;
 import com.example.study_mate.resume.service.ResumeQueryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +33,7 @@ public class ResumeController {
     @PostMapping("/api/create")
     public CommonResponse<?> createResume(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestBody ResumeCreateRequest request
+            @RequestBody ResumeRequest request
             ) {
 
 
@@ -45,4 +43,27 @@ public class ResumeController {
     }
 
 
+    // 이력서 수정
+    @PatchMapping("/api/{id}")
+    public CommonResponse<?> updateResume(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @PathVariable Long id,
+            @RequestBody ResumeRequest request
+    ){
+        return CommonResponse.onSuccess(
+                resumeCommandService.updateResume(memberDetails.getMember(),id, request)
+        );
+    }
+
+
+    // 이력서 삭제
+    @DeleteMapping("/api/{id}")
+    public CommonResponse<?> deleteResume(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @PathVariable Long id
+    ){
+        return CommonResponse.onSuccess(
+                resumeCommandService.deleteResume(memberDetails.getMember(),id)
+        );
+    }
 }
